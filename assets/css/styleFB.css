@@ -24,6 +24,7 @@ h1 {
   color: #fff;
 }
 
-body {
-  background-color: #eee;
+table,th,td {
+  border-bottom: 1px solid #add8e6;
+  border-collapse: collapse;
 }

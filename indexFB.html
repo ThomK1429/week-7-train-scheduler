@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-    <!-- Tom Keel 2016 06 19 - Week 7 - Train Scheduler  -  Local Storage -->
+    <!-- Tom Keel 2016 06 19 - Week 7 - Train Scheduler  -  FIREBASE Implementation -->
 
 <html>
 
@@ -9,64 +9,27 @@
 
     <!--  - - - - - - - - - -      The Links     - - - - - - - - - -  -->
 
-    <!-- Latest compiled and minified CSS -->
+    <!-- BootStrap - Latest compiled and minified CSS        -->
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+    <!-- JQUERY                                              -->
     <script src='https://code.jquery.com/jquery-2.1.3.min.js'>    </script>
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-
+   
     <!-- Firebase Reference -->
     <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
 
 
-    <!-- Link to Moment.js should go here -->
+    <!-- Link to Moment.js - date calculation and formatting -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     
-    <!-- <script src="assets/javascript/app.js" type="text/javascript">   </script> -->
-
-
-
+    <!-- Link to the javascript for this html -->
+    <script src="assets/javascript/appFB.js" type="text/javascript">   </script>  
 
     <!--  - - - - - - - - - -    Testing CSS  - - - - - - - - - -  -->
-
     <!-- <style type="text/css">    </style>  -->
-	  <style type="text/css">    
 
-  	.jumbotron{
-  		background-color: rgb(127,70,40);
-  		color: rgb(238,238,238);
-  		border-radius: 10px;
-      margin-top: -30px;
-      margin-bottom: -40px;
-  	}
-
-    h1 {
-      margin-top: -15px;
-        margin-bottom: -5px;
-    }
-
-
-  	#rrSign {
-  		height: 50px;
-  		width: 50px;
-  	}
-
-    .panel-heading {
-      background-color: rgb(51,122,183) !important;
-    }
-
-    .panel-title {
-      color: white;
-    }
-
-
-    table, th, td {
-      border-bottom: 1px solid lightblue;
-      border-collapse: collapse;
-    }
-
-	</style>
-
+    <!--  - - - - - - - - - -     CSS LINK    - - - - - - - - - -  -->
+	  <link href="assets/css/styleFB.css" rel="stylesheet" type="text/css"> 
 
 </head>
 
@@ -74,311 +37,96 @@
 
 
 <body>
-
-    <!--  - - - - - - - - - -    The Div's     - - - - - - - - - -  -->
-
-    <div class="jumbotron">
-      <!-- <div id="theTime"></div> -->
-      <div class="container text-center">
-      	<img src="assets/images/rr_crossing_v2.jpg" id="rrSign">
-      	<h1>The Marrakesh Express</h1>
-      	<p>All on board the train...  All on board the train...  All on board... CSN railway</p>
-      </div>
-
-     </div>
+  <!--  - - - - - - - - - -    The Div's     - - - - - - - - - -  -->
 
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Current Train Schedule</h3>
-      </div>
+  <div class="jumbotron">
+    <!-- <div id="theTime"></div> -->
 
-      <div class="panel-body">
-        
-        <table id="tblHdr" width=100%>
-          <thead>
-            <tr>
-             <th>Train <br /> Name</th>
-             <th>Destination</th>
-             <th>1st Train <br />Time</th>
-             <th>Frequency (min)</th>
-             <th>Next <br /> Arrival</th>
-             <th>Minutes <br /> Away</th>
-            </tr>
-          </thead>
-          <tbody> </tbody>
-          </table>
-        
-      </div>
+
+    <div class="container text-center">
+      <img id="rrSign" src="assets/images/rr_crossing_v2.jpg">
+
+      <h1>The Marrakesh Express</h1>
+
+
+      <p>All on board the train... All on board the train... All on board...
+      CSN railway</p>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Current Train Schedule</h3>
     </div>
 
 
-<div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Add Train</h3>
-      </div>
+    <div class="panel-body">
+      <table id="tblHdr" width="100%">
+        <thead>
+          <tr>
+            <th>Train<br>
+            Name</th>
 
-      <div class="panel-body">
+            <th>Destination</th>
+
+            <th>1st Train<br>
+            Time</th>
+
+            <th>Frequency (min)</th>
+
+            <th>Next<br>
+            Arrival</th>
+
+            <th>Minutes<br>
+            Away</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Add Train</h3>
+    </div>
+
+
+    <div class="panel-body">
       <form>
         <div class="form-group">
-          <label for="inpTrainName">Train Name</label>
-          <input type="text" class="form-control" id="inpTrainName" placeholder="">
+          <label for="inpTrainName">Train Name</label> 
+          <input class="form-control" id="inpTrainName" placeholder="" type="text">
         </div>
+
+
         <div class="form-group">
-          <label for="inpDest">Destination</label>
-          <input type="text" class="form-control" id="inpDest" placeholder="">
+          <label for="inpDest">Destination</label> 
+          <input class="form-control" id="inpDest" placeholder="" type="text">
         </div>
+
+
         <div class="form-group">
-          <label for="inpTrainTime">First Train Time (HH:mm - military time)</label>
-          <input type="time" class="form-control" id="inpTrainTime" placeholder="">
+          <label for="inpTrainTime">First Train Time (HH:mm - military time)</label> 
+          <input class="form-control" id="inpTrainTime" placeholder="" type="time">
         </div>
+
+
         <div class="form-group">
           <label for="inpFreq">Frequency (min)</label> 
-          <input type="number"  class="form-control" id="inpFreq" placeholder="mm">
+          <input class="form-control" id="inpFreq" placeholder="mm" type="number">
         </div>
-        
-        <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+        <button class="btn btn-primary" id="submitBtn" type=
+        "submit">Submit</button>
       </form>
-      </div>
-
-</div>
-
-<script>
-
-    // - - - - - - - - - -  THE JAVASCRIPT and JQUERY   - - - - - - - - - -  //
-
-    $(document).ready(function() {
-        console.log( "ready!" );
-
-        // Define the variables
-        var storageFlag = 2  // storageFlag=0 -> local storage, 
-                             // storageFlag=2 -> firebase storage
-
-        var trainName   = "";
-        var dest        = "";
-        var trainTime   = "";
-        var freq        = "";
-
-        var nextArrival = "";
-        var minutesAway = "";
-        var theTime = moment(currentTime).format("hh:mm");
-
-
-        var tFrequency = "";
-        var firstTime = ""; 
-        var firstTimeConverted = "";
-        var currentTime = "";
-        var diffTime = "";
-        var tRemainder = "";
-        var tMinutesTillTrain = "";
-        var nextTrain = "";
-
-        
-    // - - - - - - - - - -  THE JAVASCRIPT and JQUERY   - - - - - - - - - -  //
-
-    // Link to Firebase
-    var trainData = new Firebase("https://thetraintk20160620.firebaseio.com/");
-        
-
-    $('#submitBtn').on("click", function(){
-      storeTheData();
-      clearTheInput();
-      return false;
-    });
-
-    // Create Firebase event for adding train to the database and a row in the html when a user adds an entry
-    trainData.on("child_added", function(childSnapshot, prevChildKey){
-      console.log("child added process - start");
-      //console.log(childSnapshot.val());
-
-      // Store everything into a variable.
-      trainName = childSnapshot.val().name;
-      dest = childSnapshot.val().dest;
-      trainTime = childSnapshot.val().trainTime;
-      freq = childSnapshot.val().freq;
-
-      // Train Info
-      //console.log(trainName);
-      //console.log(dest);
-      //console.log(trainTime);
-      //console.log(freq);
-
-      formatTheData();
-
-      $("#tblHdr > tbody").append("<tr><td>" + trainName + "</td><td>"  
-         + dest + "</td><td>" + trainTime + "</td><td>" + freq + "</td><td>" 
-         + nextArrival + "</td><td>" + minutesAway + "</td> </tr>");
-
-      console.log("child added process - end");
-      return false;
-    }, function(errorObject){
-        //console.log("Errors handled: " + errorObject.code)
-    });  
-
-
-
-        //  retrieveTheData();
-
-        //formatTheData();
-
-        //displayTheData();
-
-    // Add child processing: retrieve the last added child and display data to the screen
- 
-
-    // Clears all of the text-boxes
-    function clearTheInput(){
-      $("#inpTrainName").val("");
-      $("#inpDest").val("");
-      $("#inpFreq").val("");
-      $("#inpTrainTime").val("");
-    }
-         
-
-    function storeTheData() {
-      //alert('store the data');
-
-      // Get the input fields from the form
-      trainName = $('#inpTrainName').val().trim(); 
-      //console.log("trainName=" + trainName);  
-      trainTime = $('#inpTrainTime').val().trim();
-      dest = $('#inpDest').val().trim();
-      freq = $('#inpFreq').val().trim(); 
-
-      // Creates local "temporary" object for holding train data
-      var newTrain = {
-        name:  trainName,
-        dest: dest,
-        trainTime: trainTime,
-        freq: freq
-      }
-
-      // Push the data to Firebase
-      trainData.push(newTrain);
-    
-    }  // end storeTheData function
-
-
-
-
-    function formatTheData() {
-            // Taken from week 7.x trainExample.html for moment processing. 
-            // Assumptions
-          tFrequency = freq;
-                    console.log("tFrequency: " + tFrequency);
-          console.log("freq: " + freq);
-            // var tFrequency = 60;
-            //var firstTime = "03:30"; // Time is 3:30 AM
-          firstTime = trainTime; 
-
-            // First Time (pushed back 1 year to make sure it comes before current time)
-          firstTimeConverted = moment(firstTime,"hh:mm").subtract(1, "years");
-            console.log("firstTimeConverted: " + firstTimeConverted);
-
-            // Current Time
-          currentTime = moment();
-            console.log("CURRENT TIME: " + currentTime);
-            console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-            // Difference between the times
-          diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-            console.log("DIFFERENCE IN TIME: " + diffTime);
-
-            // Time apart (remainder)
-          tRemainder = diffTime % tFrequency;
-            console.log(tRemainder);
-
-            // Minute Until Train
-          tMinutesTillTrain = tFrequency - tRemainder;
-            console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-            if (tMinutesTillTrain == tFrequency) {
-               tMinutesTillTrain = "Arrived - in Station";
-            }
-
-            // Next Train
-          nextTrain = moment().add(tMinutesTillTrain, "minutes")
-            console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
-
-            nextArrival = moment(nextTrain).format("hh:mm");
-            minutesAway = tMinutesTillTrain;
-        }
-
-
-
-
-
-
-
-//-------------------------------------------------------------------------
-
-        function retrieveTheData(){
-          
-
-              if(storageFlag == 2) 
-                console.log("start of query");
-                //var ref = new Firebase("https://docs-examples.firebaseio.com/samplechat/messages");
-                var query = trainData.orderByChild("trainName").limitToLast(5);
-                query.on("child_added", function(messageSnapshot) {
-                // This will only be called for the last 100 messages
-                 var messageData = messageSnapshot.val();
-                 console.log("msg data=" + messageData);
-                 //displayTheData();
-                });
-                console.log("end of query");
-                //dataRef.orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot){
-  
-       //$("#namedisplay").html(snapshot.val().name);
-       //$("#emaildisplay").html(snapshot.val().email);
-       //$("#agedisplay").html(snapshot.val().age);
-       //$("#commentdisplay").html(snapshot.val().comment);
-        } 
-
-
-
-
-
-
-        function displayTheData(){
-          //  $("#employeeTable > tbody").append("<tr><td>" + empName + "</td><td>" 
-          // + empRole + "</td><td>" + empStartPretty + "</td><td>" + empMonths 
-          // + "</td><td>" + empRate + "</td><td>" + empBilled + "</td></tr>");
-          console.log("displayTheData Start");
-          $("#tblHdr > tbody").append("<tr><td>" + trainName + "</td><td>" 
-                + dest + "</td><td>" + trainTime + "</td><td>" + freq + "</td><td>" 
-                + nextArrival + "</td><td>" + minutesAway + "</td> </tr>");
-          console.log("displayTheData End");
-
-        }
-   
-//Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
-trainData.on("child_added", function(childSnapshot) {
-  // Log everything that's coming out of snapshot
-  //console.log(childSnapshot.val().trainName);
-  
-  //console.log(childSnapshot.val().dest);
-  //console.log(childSnapshot.val().trainTime);
-  //console.log(childSnapshot.val().freq);
-
-  // full list of items to the well
-
-   // $('#full-member-list').append("<div class='well'><span id='name'> "+childSnapshot.val().name+" </span><span   id='email'> "+childSnapshot.val().email+" </span><span id='age'> "+childSnapshot.val().age+" </span><span  id='comment'> "+childSnapshot.val().comment+" </span></div>")//
-
-
-// Handle the errors
-}, function(errorObject){
-  //console.log("Errors handled: " + errorObject.code)
-});
-
-
-
-    }); // end document.ready function
-
-
-    
- 
-
-</script>
-
-
+    </div>
+  </div>
+  <!-- <script>  </script>  -->
 </body>
 </html>
